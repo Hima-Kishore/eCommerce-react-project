@@ -1,7 +1,36 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams, Link } from 'react-router';
 import { Header } from '../components/Header.jsx';
 import './TrackingPage.css'
 
 export function TrackingPage({ cart }) {
+    const { orderId, productId } = useParams();
+    const [order, setOrder] = useState(null);
+
+    useEffect(() => {
+        let isMounted = true;
+        const loadOrders = async () => {
+            const response = await axios.get(`/api/orders/${orderId}?expand=products`)
+            if(isMounted) {
+                setOrder(response.data);
+            }
+        };
+
+        loadOrders();
+
+        return () => { isMounted = false; };
+    }, [orderId]);
+    
+    if(!order) return null;
+
+    // const products = order?.products || [];
+
+    const productDetails = order.products.find((productDetails) => {
+        return productDetails.productId === productId;
+    })
+console.log(order);
+
     return (
         <>
             <title>Tracking</title>
@@ -10,16 +39,16 @@ export function TrackingPage({ cart }) {
 
             <div className="tracking-page">
                 <div className="order-tracking">
-                    <a className="back-to-orders-link link-primary" href="/orders">
+                    <Link className="back-to-orders-link link-primary" to="/orders">
                         View all orders
-                    </a>
+                    </Link>
 
                     <div className="delivery-date">
                         Arriving on Monday, June 13
                     </div>
 
                     <div className="product-info">
-                        Black and Gray Athletic Cotton Socks - 6 Pairs
+                        name
                     </div>
 
                     <div className="product-info">
