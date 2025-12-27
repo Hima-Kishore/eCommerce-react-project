@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { formatMoney } from '../../utils/money.js';
 import { OrderSummary } from './OrderSummary.jsx';
 import { CheckoutHeader } from './CheckoutHeader.jsx';
+import { PaymentSummary } from './PaymentSummary.jsx';
 import './CheckoutPage.css';
 
 export function CheckoutPage({ cart }) {
@@ -25,63 +25,16 @@ export function CheckoutPage({ cart }) {
     return(
         <>
             <title>Checkout</title>
-            <CheckoutHeader />
+            <CheckoutHeader cart={cart}/>
 
             <div className="checkout-page">
                 <div className="page-title">Review your order</div>
 
                 <div className="checkout-grid">
-                        <OrderSummary deliveryOptions={deliveryOptions} cart={cart}/>
+                    <OrderSummary deliveryOptions={deliveryOptions} cart={cart}/>
 
-                    <div className="payment-summary">
-                        <div className="payment-summary-title">
-                            Payment Summary
-                        </div>
+                    <PaymentSummary paymentSummary={paymentSummary} />
 
-                        {paymentSummary && (
-                            <>
-                                <div className="payment-summary-row">
-                                    <div>Items ({paymentSummary.totalItems}):</div>
-                                    <div className="payment-summary-money">
-                                        {formatMoney(paymentSummary.productCostCents)}
-                                    </div>
-                                </div>
-
-                                <div className="payment-summary-row">
-                                    <div>Shipping &amp; handling:</div>
-                                    <div className="payment-summary-money">
-                                        {formatMoney(paymentSummary.shippingCostCents)}
-                                    </div>
-                                </div>
-
-                                <div className="payment-summary-row subtotal-row">
-                                    <div>Total before tax:</div>
-                                    <div className="payment-summary-money">
-                                        {formatMoney(paymentSummary.totalCostBeforeTaxCents)}
-                                    </div>
-                                </div>
-
-                                <div className="payment-summary-row">
-                                    <div>Estimated tax (10%):</div>
-                                    <div className="payment-summary-money">
-                                        {formatMoney(paymentSummary.taxCents)}
-                                    </div>
-                                </div>
-
-                                <div className="payment-summary-row total-row">
-                                    <div>Order total:</div>
-                                    <div className="payment-summary-money">
-                                        {formatMoney(paymentSummary.totalCostCents)}
-                                    </div>
-                                </div>
-
-                                <button className="place-order-button button-primary">
-                                    Place your order
-                                </button>
-                            </>
-                        )}
-                        
-                    </div>
                 </div>
             </div>
         </>
