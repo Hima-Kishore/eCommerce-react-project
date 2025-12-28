@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { Header } from '../components/Header.jsx';
 import './TrackingPage.css'
@@ -29,7 +30,6 @@ export function TrackingPage({ cart }) {
     const productDetails = order.products.find((productDetails) => {
         return productDetails.productId === productId;
     })
-console.log(order);
 
     return (
         <>
@@ -44,18 +44,18 @@ console.log(order);
                     </Link>
 
                     <div className="delivery-date">
-                        Arriving on Monday, June 13
+                        Arriving on {dayjs(productDetails.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
                     </div>
 
                     <div className="product-info">
-                        name
+                        {productDetails.product.name}
                     </div>
 
                     <div className="product-info">
-                        Quantity: 1
+                        Quantity: {productDetails.quantity}
                     </div>
 
-                    <img className="product-image" src="images/products/athletic-cotton-socks-6-pairs.jpg" />
+                    <img className="product-image" src={productDetails.product.image} />
 
                     <div className="progress-labels-container">
                         <div className="progress-label">
