@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Header } from "../../components/Header.jsx";
-import { formatMoney } from '../../utils/money.js';
 import { ProductsGrid } from './ProductsGrid.jsx';
 import "./HomePage.css";
 
-export function HomePage({ cart }) {
+export function HomePage({ cart, loadCart }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export function HomePage({ cart }) {
       <Header cart={cart}/>
 
       <div className="home-page">
-        <ProductsGrid products={products} formatMoney={formatMoney}/>
+        <ProductsGrid products={products} loadCart={loadCart}/>
       </div>
     </>
   );
