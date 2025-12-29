@@ -1,13 +1,16 @@
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 import { formatMoney } from '../../utils/money.js';
 
 export function PaymentSummary({ paymentSummary, cart, loadCart}) {
+    const navigate = useNavigate();
     const handlePlaceOrder = async () => {
         await axios.post('/api/orders', {
             products: cart,
             totalCostCents: paymentSummary.totalCostCents,
         })
         await loadCart();
+        navigate('/orders');
     };
 
     return (

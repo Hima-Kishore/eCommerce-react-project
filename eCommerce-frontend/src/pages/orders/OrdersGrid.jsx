@@ -6,7 +6,6 @@ export function OrdersGrid({ orders }) {
     return (
         <div className="orders-grid">
             {orders.map((order) => {
-                console.log(order);
                 return (
                     <div key={order.id} className="order-container">
                         
