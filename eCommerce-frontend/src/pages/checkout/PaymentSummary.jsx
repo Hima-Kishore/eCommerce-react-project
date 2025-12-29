@@ -1,6 +1,15 @@
+import axios from 'axios';
 import { formatMoney } from '../../utils/money.js';
 
-export function PaymentSummary({ paymentSummary}) {
+export function PaymentSummary({ paymentSummary, cart, loadCart}) {
+    const handlePlaceOrder = async () => {
+        await axios.post('/api/orders', {
+            products: cart,
+            totalCostCents: paymentSummary.totalCostCents,
+        })
+        await loadCart();
+    };
+
     return (
         <div className="payment-summary">
                         <div className="payment-summary-title">
@@ -44,7 +53,8 @@ export function PaymentSummary({ paymentSummary}) {
                                     </div>
                                 </div>
 
-                                <button className="place-order-button button-primary">
+                                <button className="place-order-button button-primary"
+                                    onClick={handlePlaceOrder}>
                                     Place your order
                                 </button>
                             </>

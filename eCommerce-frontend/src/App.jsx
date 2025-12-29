@@ -16,7 +16,10 @@ function App() {
   };
 
   useEffect(() => {
-    loadCart();
+    const func = () => {
+      loadCart();
+    };
+    func();
   }, []);
 
   return (

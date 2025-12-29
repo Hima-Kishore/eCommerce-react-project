@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 import { OrderSummary } from './OrderSummary.jsx';
 import { CheckoutHeader } from './CheckoutHeader.jsx';
 import { PaymentSummary } from './PaymentSummary.jsx';
@@ -28,7 +29,18 @@ export function CheckoutPage({ cart, loadCart }) {
 
     }, [cart])
 
-
+    if(cart.length===0) return (<>
+        <title>Checkout</title>
+        <CheckoutHeader cart={cart}/>
+        <div className="checkout-page">
+            <div className="page-title">Please Add Items to the Cart  
+                <Link className="return-to-home-link"
+                    to="/">
+                    : Home
+                </Link>
+            </div>
+        </div>
+    </>);
     return(
         <>
             <title>Checkout</title>
@@ -40,7 +52,7 @@ export function CheckoutPage({ cart, loadCart }) {
                 <div className="checkout-grid">
                     <OrderSummary deliveryOptions={deliveryOptions} cart={cart} loadCart={loadCart}/>
 
-                    <PaymentSummary paymentSummary={paymentSummary} />
+                    <PaymentSummary paymentSummary={paymentSummary} cart={cart} loadCart={loadCart}/>
 
                 </div>
             </div>
